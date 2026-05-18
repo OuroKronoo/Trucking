@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TruckCo. — Reliable Freight & Delivery Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Leaflet CSS for map -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- TruckCo Stylesheet -->
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+    </div>
+    TruckCo.
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#fleet">Fleet</a></li>
+    <li><a href="#testimonials">Clients</a></li>
+    <li><a href="#tracker">Track Shipment</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal(); return false;">Get Quote</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="closeMobileMenu()">Services</a>
+  <a href="#how-it-works" onclick="closeMobileMenu()">How It Works</a>
+  <a href="#fleet" onclick="closeMobileMenu()">Fleet</a>
+  <a href="#testimonials" onclick="closeMobileMenu()">Clients</a>
+  <a href="#tracker" onclick="closeMobileMenu()">Track Shipment</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+  <a href="#" class="nav-cta" style="text-align:center; padding:12px; border-radius:8px; color:#111;" onclick="openModal(); closeMobileMenu(); return false;">Get a Quote</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span> Trusted Since 2008</div>
+      <h1 class="hero-title">Reliable<br>Freight &<br><span>Delivery</span><br>Solutions</h1>
+      <p class="hero-sub">Fast, safe, and on-time — we move your cargo so you can focus on what matters most. From last-mile delivery to long-haul freight, we cover every route.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary" onclick="openModal(); return false;">
+          Get a Free Quote
+          <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+        </a>
+        <a href="#how-it-works" class="btn-outline">Our Services</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          Low-cost & Insured
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          GPS Transit
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          24/7 Support
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-truck-scene">
+        <svg class="truck-svg-wrap" viewBox="0 0 480 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Road -->
+          <rect x="0" y="220" width="480" height="60" fill="#2a2a2a"/>
+          <rect x="0" y="240" width="480" height="4" fill="#333"/>
+          <!-- Road dashes animated -->
+          <g class="road-line">
+            <rect x="-60" y="247" width="40" height="3" rx="1.5" fill="rgba(255,255,255,0.12)"/>
+            <rect x="0"   y="247" width="40" height="3" rx="1.5" fill="rgba(255,255,255,0.12)"/>
+            <rect x="60"  y="247" width="40" height="3" rx="1.5" fill="rgba(255,255,255,0.12)"/>
+            <rect x="120" y="247" width="40" height="3" rx="1.5" fill="rgba(255,255,255,0.12)"/>
+            <rect x="180" y="247" width="40" height="3" rx="1.5" fill="rgba(255,255,255,0.12)"/>
+            <rect x="240" y="247" width="40" height="3" rx="1.5" fill="rgba(255,255,255,0.12)"/>
+            <rect x="300" y="247" width="40" height="3" rx="1.5" fill="rgba(255,255,255,0.12)"/>
+            <rect x="360" y="247" width="40" height="3" rx="1.5" fill="rgba(255,255,255,0.12)"/>
+            <rect x="420" y="247" width="40" height="3" rx="1.5" fill="rgba(255,255,255,0.12)"/>
+          </g>
+          <!-- Truck body -->
+          <g class="truck-body-anim">
+            <!-- Trailer -->
+            <rect x="60" y="120" width="280" height="100" rx="4" fill="#1a1a1a"/>
+            <rect x="60" y="120" width="280" height="100" rx="4" stroke="#333" stroke-width="1.5"/>
+            <!-- TruckCo branding on trailer -->
+            <rect x="80" y="140" width="240" height="60" rx="3" fill="#222"/>
+            <text x="200" y="176" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="22" fill="#F5A623" letter-spacing="2">TRUCKCO.</text>
+            <text x="200" y="192" text-anchor="middle" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,0.3)" letter-spacing="4">LOGISTICS</text>
+            <!-- Trailer door lines -->
+            <line x1="200" y1="120" x2="200" y2="220" stroke="#333" stroke-width="1"/>
+            <!-- Cab -->
+            <rect x="320" y="140" width="100" height="80" rx="4" fill="#F5A623"/>
+            <rect x="322" y="140" width="98" height="80" rx="4" stroke="#D4880A" stroke-width="1"/>
+            <!-- Cab window -->
+            <rect x="332" y="148" width="60" height="38" rx="3" fill="#1a1a1a"/>
+            <rect x="334" y="150" width="56" height="34" rx="2" fill="#0d1117" opacity="0.9"/>
+            <!-- Cab detail -->
+            <rect x="395" y="148" width="20" height="14" rx="2" fill="#D4880A"/>
+            <!-- Headlight -->
+            <rect x="416" y="185" width="8" height="16" rx="2" fill="#FFF9C4"/>
+            <!-- Grill -->
+            <rect x="395" y="175" width="24" height="3" rx="1" fill="#D4880A"/>
+            <rect x="395" y="182" width="24" height="3" rx="1" fill="#D4880A"/>
+            <!-- Side mirror -->
+            <rect x="316" y="150" width="8" height="10" rx="2" fill="#333"/>
+            <!-- Exhaust pipe -->
+            <rect x="400" y="110" width="6" height="32" rx="3" fill="#333"/>
+            <!-- Smoke puffs -->
+            <circle cx="403" cy="105" r="5" fill="rgba(100,100,100,0.3)"/>
+            <circle cx="406" cy="96"  r="7" fill="rgba(100,100,100,0.2)"/>
+            <circle cx="401" cy="87"  r="9" fill="rgba(100,100,100,0.12)"/>
+            <!-- Wheels -->
+            <circle class="wheel-spin" cx="120" cy="220" r="24" fill="#222" stroke="#444" stroke-width="2"/>
+            <circle cx="120" cy="220" r="12" fill="#333"/>
+            <circle cx="120" cy="220" r="4" fill="#555"/>
+            <circle class="wheel-spin" cx="220" cy="220" r="24" fill="#222" stroke="#444" stroke-width="2"/>
+            <circle cx="220" cy="220" r="12" fill="#333"/>
+            <circle cx="220" cy="220" r="4" fill="#555"/>
+            <circle class="wheel-spin" cx="350" cy="220" r="24" fill="#F5A623" stroke="#D4880A" stroke-width="2"/>
+            <circle cx="350" cy="220" r="12" fill="#D4880A"/>
+            <circle cx="350" cy="220" r="4" fill="#B8720A"/>
+            <circle class="wheel-spin" cx="400" cy="220" r="20" fill="#F5A623" stroke="#D4880A" stroke-width="2"/>
+            <circle cx="400" cy="220" r="10" fill="#D4880A"/>
+            <circle cx="400" cy="220" r="3" fill="#B8720A"/>
+          </g>
+          <!-- Orange stripe accent -->
+          <rect x="60" y="190" width="260" height="6" fill="#F5A623" opacity="0.7"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <span class="stat-num" data-target="500">0</span>
+    <span class="stat-label">Active Fleet Units</span>
+  </div>
+  <div class="stat-item reveal reveal-delay-1">
+    <span class="stat-num" data-target="98" data-suffix="%">0%</span>
+    <span class="stat-label">On-Time Delivery Rate</span>
+  </div>
+  <div class="stat-item reveal reveal-delay-2">
+    <span class="stat-num" data-target="15" data-suffix="+">0+</span>
+    <span class="stat-label">Years of Experience</span>
+  </div>
+  <div class="stat-item reveal reveal-delay-3">
+    <span class="stat-num" data-target="50" data-suffix="K+">0K+</span>
+    <span class="stat-label">Deliveries Completed</span>
+  </div>
+  <div class="stat-item reveal reveal-delay-4">
+    <span class="stat-num">24/7</span>
+    <span class="stat-label">Always-On Support</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div class="section-tag">What We Offer</div>
+    <h2 class="section-title">Our Delivery Services</h2>
+    <p class="section-sub" style="margin:12px auto 0;">From local last-mile to long-haul freight — we've got every shipment size covered with dedicated professionals.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      </div>
+      <div class="service-name">Last-Mile Delivery</div>
+      <p class="service-desc">Door-to-door delivery for e-commerce and retail buyers with real-time route optimization and live tracking.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zm-.5 1.5 1.96 2.5H17V9.5h2.5zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9 1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+      </div>
+      <div class="service-name">Long Haul Freight</div>
+      <p class="service-desc">Nationwide freight transport with experienced drivers and tracked fleets. Reliable coast-to-coast delivery.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.11L5.71 22l1-2.3A4.49 4.49 0 008 20c4 0 4-2 8-2s4 2 8 2v-2c-4 0-4-2-8-2-1.13 0-1.9.16-2.53.33C14.28 12.56 16 10.5 17 8z"/></svg>
+      </div>
+      <div class="service-name">Cold Chain Logistics</div>
+      <p class="service-desc">Temperature-controlled transport for perishable goods — from farm produce to pharmaceuticals.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 9V7h-2V5c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2v-2h-2V9h2zm-4 10H4V5h14v14z"/></svg>
+      </div>
+      <div class="service-name">Heavy Equipment</div>
+      <p class="service-desc">Safe transport of oversized and heavy industrial equipment across regions with specialized rigging.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M13 2.05V4.05C17.39 4.54 20.5 8.53 20.5 13C20.5 17.47 17.39 21.46 13 21.95V23.95C18.5 23.45 22.5 18.62 22.5 13C22.5 7.38 18.5 2.55 13 2.05ZM11 2.06C9.05 2.25 7.19 3 5.67 4.26L7.1 5.74C8.22 4.84 9.57 4.26 11 4.06V2.06ZM4.26 5.67C3 7.19 2.25 9.04 2.06 11H4.06C4.24 9.58 4.8 8.23 5.69 7.1L4.26 5.67ZM2.06 13C2.25 14.96 3 16.81 4.27 18.33L5.69 16.9C4.81 15.77 4.24 14.42 4.06 13H2.06ZM5.67 19.74C7.18 21 9.04 21.79 11 21.95V19.95C9.58 19.77 8.23 19.2 7.1 18.31L5.67 19.74ZM12 7L7 12L12 17L13.41 15.59L10.83 13H17V11H10.83L13.41 8.41L12 7Z"/></svg>
+      </div>
+      <div class="service-name">Express Delivery</div>
+      <p class="service-desc">Same-day and next-day delivery options for urgent shipments when time is critical.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/><path d="M7 9h10v2H7zm0-3h10v2H7zm0 6h7v2H7z"/></svg>
+      </div>
+      <div class="service-name">Warehousing</div>
+      <p class="service-desc">Short and long-term storage solutions with complete inventory management and fulfilment services.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="how-header">
+    <div class="section-tag">The Process</div>
+    <h2 class="section-title" style="color:var(--white);">Simple. Fast. Reliable.</h2>
+  </div>
+  <div class="steps-track">
+    <div class="step reveal active" onclick="setActiveStep(this)">
+      <div class="step-num">01</div>
+      <div class="step-title">Request a Quote</div>
+      <p class="step-desc">Fill out our quick online form or call us to describe your shipment needs.</p>
+    </div>
+    <div class="step reveal reveal-delay-1" onclick="setActiveStep(this)">
+      <div class="step-num">02</div>
+      <div class="step-title">Get Matched</div>
+      <p class="step-desc">We assign the best truck and driver suited for your cargo type and route.</p>
+    </div>
+    <div class="step reveal reveal-delay-2" onclick="setActiveStep(this)">
+      <div class="step-num">03</div>
+      <div class="step-title">Track Live</div>
+      <p class="step-desc">Monitor your shipment in real-time via our online portal or mobile app.</p>
+    </div>
+    <div class="step reveal reveal-delay-3" onclick="setActiveStep(this)">
+      <div class="step-num">04</div>
+      <div class="step-title">Delivered</div>
+      <p class="step-desc">Confirm arrival on time, with a delivery confirmation and report.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FLEET -->
+<section id="fleet">
+  <div class="fleet-header reveal">
+    <div class="section-tag">Our Fleet</div>
+    <h2 class="section-title">Built for Every Job</h2>
+    <p class="section-sub">Choose from our diverse fleet of well-maintained vehicles for any cargo size.</p>
+  </div>
+  <div class="fleet-tabs">
+    <button class="fleet-tab active" onclick="filterFleet('all', this)">All Vehicles</button>
+    <button class="fleet-tab" onclick="filterFleet('small', this)">Small Cargo</button>
+    <button class="fleet-tab" onclick="filterFleet('medium', this)">Medium Cargo</button>
+    <button class="fleet-tab" onclick="filterFleet('large', this)">Large Cargo</button>
+    <button class="fleet-tab" onclick="filterFleet('cold', this)">Cold Chain</button>
+  </div>
+  <div class="fleet-grid" id="fleetGrid">
+    <div class="fleet-card reveal" data-category="small">
+      <div class="fleet-img">
+        <svg viewBox="0 0 140 80" fill="none">
+          <rect x="20" y="30" width="80" height="36" rx="3" fill="#ddd"/>
+          <rect x="85" y="38" width="28" height="22" rx="2" fill="#F5A623"/>
+          <rect x="88" y="41" width="18" height="12" rx="1" fill="#333"/>
+          <circle cx="45" cy="66" r="9" fill="#555"/>
+          <circle cx="45" cy="66" r="4" fill="#888"/>
+          <circle cx="95" cy="66" r="9" fill="#555"/>
+          <circle cx="95" cy="66" r="4" fill="#888"/>
+          <rect x="20" y="50" width="65" height="3" fill="#F5A623"/>
+        </svg>
+      </div>
+      <div class="fleet-info">
+        <div class="fleet-name">Mini Van</div>
+        <div class="fleet-specs">
+          <div class="fleet-spec">Capacity: up to 1,000 kg</div>
+          <div class="fleet-spec">Best for: Urban & last-mile</div>
+        </div>
+        <span class="fleet-badge">Same-Day</span>
+      </div>
+    </div>
+    <div class="fleet-card reveal reveal-delay-1" data-category="medium">
+      <div class="fleet-img">
+        <svg viewBox="0 0 140 80" fill="none">
+          <rect x="10" y="28" width="95" height="38" rx="3" fill="#ddd"/>
+          <rect x="90" y="36" width="35" height="24" rx="2" fill="#F5A623"/>
+          <rect x="93" y="39" width="22" height="14" rx="1" fill="#333"/>
+          <circle cx="35" cy="66" r="9" fill="#555"/><circle cx="35" cy="66" r="4" fill="#888"/>
+          <circle cx="80" cy="66" r="9" fill="#555"/><circle cx="80" cy="66" r="4" fill="#888"/>
+          <circle cx="112" cy="66" r="9" fill="#F5A623"/><circle cx="112" cy="66" r="4" fill="#D4880A"/>
+          <rect x="10" y="50" width="80" height="3" fill="#F5A623"/>
+        </svg>
+      </div>
+      <div class="fleet-info">
+        <div class="fleet-name">4-Wheeler Closed Van</div>
+        <div class="fleet-specs">
+          <div class="fleet-spec">Capacity: up to 3,000 kg</div>
+          <div class="fleet-spec">Best for: City & province</div>
+        </div>
+        <span class="fleet-badge">Versatile</span>
+      </div>
+    </div>
+    <div class="fleet-card reveal reveal-delay-2" data-category="large">
+      <div class="fleet-img">
+        <svg viewBox="0 0 140 80" fill="none">
+          <rect x="5" y="24" width="105" height="40" rx="3" fill="#ddd"/>
+          <rect x="98" y="33" width="38" height="26" rx="2" fill="#F5A623"/>
+          <rect x="101" y="36" width="24" height="16" rx="1" fill="#333"/>
+          <circle cx="25" cy="64" r="9" fill="#555"/><circle cx="25" cy="64" r="4" fill="#888"/>
+          <circle cx="60" cy="64" r="9" fill="#555"/><circle cx="60" cy="64" r="4" fill="#888"/>
+          <circle cx="90" cy="64" r="9" fill="#555"/><circle cx="90" cy="64" r="4" fill="#888"/>
+          <circle cx="122" cy="64" r="9" fill="#F5A623"/><circle cx="122" cy="64" r="4" fill="#D4880A"/>
+          <rect x="5" y="48" width="93" height="3" fill="#F5A623"/>
+        </svg>
+      </div>
+      <div class="fleet-info">
+        <div class="fleet-name">6-Wheeler Truck</div>
+        <div class="fleet-specs">
+          <div class="fleet-spec">Capacity: up to 7,000 kg</div>
+          <div class="fleet-spec">Best for: Regional freight</div>
+        </div>
+        <span class="fleet-badge">Regional</span>
+      </div>
+    </div>
+    <div class="fleet-card reveal reveal-delay-3" data-category="large cold">
+      <div class="fleet-img" style="background:#E0EEF8;">
+        <svg viewBox="0 0 140 80" fill="none">
+          <rect x="4" y="18" width="115" height="46" rx="3" fill="#B8D8F0"/>
+          <rect x="4" y="18" width="115" height="46" rx="3" stroke="#89BEE0" stroke-width="1.5"/>
+          <text x="60" y="46" text-anchor="middle" font-size="9" fill="#1565C0" font-weight="700">COLD CHAIN</text>
+          <rect x="108" y="28" width="32" height="30" rx="2" fill="#F5A623"/>
+          <rect x="111" y="31" width="20" height="16" rx="1" fill="#333"/>
+          <circle cx="20" cy="64" r="9" fill="#555"/><circle cx="20" cy="64" r="4" fill="#888"/>
+          <circle cx="55" cy="64" r="9" fill="#555"/><circle cx="55" cy="64" r="4" fill="#888"/>
+          <circle cx="90" cy="64" r="9" fill="#555"/><circle cx="90" cy="64" r="4" fill="#888"/>
+          <circle cx="120" cy="64" r="9" fill="#F5A623"/><circle cx="120" cy="64" r="4" fill="#D4880A"/>
+        </svg>
+      </div>
+      <div class="fleet-info">
+        <div class="fleet-name">Reefer Truck</div>
+        <div class="fleet-specs">
+          <div class="fleet-spec">Capacity: up to 5,000 kg</div>
+          <div class="fleet-spec">Temp: -20°C to 10°C</div>
+        </div>
+        <span class="fleet-badge" style="background:#E3F2FD;color:#1565C0;">Cold Chain</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARGO CALCULATOR & VISUALIZER -->
+<section id="cargo-calc">
+  <div style="text-align:center;">
+    <div class="section-tag" style="justify-content:center;">Smart Tools</div>
+    <h2 class="section-title" style="color:var(--white);">Find Your Perfect Truck</h2>
+    <p class="section-sub" style="margin:12px auto 0;color:rgba(255,255,255,0.45);">Enter your cargo weight for an instant recommendation, then use the cargo grid to visualize how your packages fit.</p>
+  </div>
+
+  <div class="cargo-calc-grid">
+
+    <!-- LEFT: Weight Recommender -->
+    <div class="weight-panel reveal">
+      <div class="weight-panel-title">Weight-Based Recommender</div>
+      <p class="weight-panel-sub">Type or slide your total cargo weight and we'll instantly match you to the right vehicle.</p>
+
+      <div class="weight-input-row">
+        <div class="weight-input-wrap">
+          <input type="number" id="weightInput" class="weight-input" placeholder="e.g. 2500" min="1" max="30000" oninput="onWeightInput(this.value)" />
+          <span class="weight-unit">KG</span>
+        </div>
+      </div>
+
+      <input type="range" id="weightSlider" class="weight-slider" min="1" max="15000" value="0" step="50" oninput="onSliderInput(this.value)" />
+      <div class="weight-slider-labels">
+        <span>0 kg</span><span>3,750 kg</span><span>7,500 kg</span><span>11,250 kg</span><span>15,000 kg</span>
+      </div>
+
+      <div class="weight-presets">
+        <button class="weight-preset" onclick="setWeight(500, this)">500 kg<br><span style="font-size:10px;font-weight:400;opacity:0.6;">Small</span></button>
+        <button class="weight-preset" onclick="setWeight(1500, this)">1,500 kg<br><span style="font-size:10px;font-weight:400;opacity:0.6;">Medium</span></button>
+        <button class="weight-preset" onclick="setWeight(3500, this)">3,500 kg<br><span style="font-size:10px;font-weight:400;opacity:0.6;">Large</span></button>
+        <button class="weight-preset" onclick="setWeight(7000, this)">7,000 kg<br><span style="font-size:10px;font-weight:400;opacity:0.6;">Heavy</span></button>
+        <button class="weight-preset" onclick="setWeight(12000, this)">12,000 kg<br><span style="font-size:10px;font-weight:400;opacity:0.6;">Max</span></button>
+      </div>
+
+      <div class="truck-recommendation" id="truckRec">
+        <div class="rec-label">Recommended Vehicle</div>
+        <div class="rec-card" id="recCard">
+          <div class="rec-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4z"/></svg>
+          </div>
+          <div style="flex:1;">
+            <div class="rec-truck-name" id="recName">4-Wheeler Closed Van</div>
+            <div class="rec-truck-cap" id="recCap">Capacity: up to 3,000 kg</div>
+            <div class="rec-fit-bar-wrap">
+              <div class="rec-fit-bar" id="recBar" style="width:0%"></div>
+            </div>
+            <div class="rec-fit-label" id="recFitLabel">Load fill: 0%</div>
+          </div>
+        </div>
+        <div class="rec-warning" id="recWarning">This weight exceeds our largest single vehicle. We recommend scheduling multiple trucks or contacting us for a custom fleet plan.</div>
+        <div class="rec-alts" id="recAlts"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Cargo Grid Visualizer -->
+    <div class="cargo-grid-panel reveal reveal-delay-1">
+      <div class="cargo-grid-panel-title">Cargo Space Visualizer</div>
+      <p class="cargo-grid-panel-sub">Click the squares inside the truck to fill up cargo space. Each square = 1 package unit. Choose your package size below.</p>
+
+      <!-- Truck silhouette with overlay grid -->
+      <div class="truck-cargo-wrap" id="truckCargoWrap">
+        <svg class="truck-shell" viewBox="0 0 520 220" fill="none" xmlns="http://www.w3.org/2000/svg" id="truckShellSvg">
+          <ellipse cx="260" cy="210" rx="220" ry="6" fill="rgba(0,0,0,0.3)"/>
+          <rect x="20" y="40" width="340" height="148" rx="6" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1.5"/>
+          <rect x="20" y="40" width="340" height="8" rx="3" fill="#F5A623" opacity="0.7"/>
+          <rect x="20" y="176" width="340" height="6" fill="#F5A623" opacity="0.5"/>
+          <line x1="190" y1="48" x2="190" y2="182" stroke="#3a3a3a" stroke-width="1"/>
+          <rect x="354" y="68" width="128" height="120" rx="6" fill="#F5A623"/>
+          <rect x="356" y="70" width="124" height="118" rx="5" stroke="#D4880A" stroke-width="1.5"/>
+          <rect x="364" y="78" width="76" height="54" rx="4" fill="#111"/>
+          <rect x="366" y="80" width="72" height="50" rx="3" fill="#0a1520" opacity="0.95"/>
+          <line x1="372" y1="83" x2="380" y2="126" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
+          <rect x="444" y="78" width="34" height="50" rx="3" fill="#D4880A"/>
+          <rect x="460" y="34" width="8" height="36" rx="4" fill="#555"/>
+          <rect x="478" y="130" width="6" height="20" rx="3" fill="#FFF9C4"/>
+          <rect x="444" y="138" width="34" height="3" rx="1.5" fill="#B8720A"/>
+          <rect x="444" y="146" width="34" height="3" rx="1.5" fill="#B8720A"/>
+          <rect x="444" y="154" width="34" height="3" rx="1.5" fill="#B8720A"/>
+          <rect x="348" y="82" width="10" height="14" rx="2" fill="#555"/>
+          <text x="100" y="120" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="13" fill="rgba(245,166,35,0.15)" letter-spacing="3">TRUCKCO.</text>
+          <circle cx="85" cy="192" r="22" fill="#222" stroke="#3a3a3a" stroke-width="1.5"/>
+          <circle cx="85" cy="192" r="10" fill="#2e2e2e"/>
+          <circle cx="85" cy="192" r="4" fill="#444"/>
+          <circle cx="210" cy="192" r="22" fill="#222" stroke="#3a3a3a" stroke-width="1.5"/>
+          <circle cx="210" cy="192" r="10" fill="#2e2e2e"/>
+          <circle cx="210" cy="192" r="4" fill="#444"/>
+          <circle cx="390" cy="192" r="22" fill="#F5A623" stroke="#D4880A" stroke-width="1.5"/>
+          <circle cx="390" cy="192" r="10" fill="#D4880A"/>
+          <circle cx="390" cy="192" r="4" fill="#B8720A"/>
+          <circle cx="450" cy="192" r="18" fill="#F5A623" stroke="#D4880A" stroke-width="1.5"/>
+          <circle cx="450" cy="192" r="8" fill="#D4880A"/>
+          <circle cx="450" cy="192" r="3" fill="#B8720A"/>
+        </svg>
+        <div id="cargoSlotsOverlay" class="cargo-slots-overlay"></div>
+      </div>
+
+      <!-- Package size selector -->
+      <div class="pkg-size-selector" id="pkgSizeSelector">
+        <button class="pkg-size-btn active" onclick="setPkgSize(1,1,this)" title="1x1 slot">
+          <div class="pkg-size-icon"><div class="b1" style="width:14px;height:14px;"></div></div>
+          <div class="pkg-size-label">Small</div>
+          <div class="pkg-size-cells">1x1</div>
+        </button>
+        <button class="pkg-size-btn" onclick="setPkgSize(1,2,this)" title="1x2 slots">
+          <div class="pkg-size-icon">
+            <div class="b1" style="width:14px;height:14px;"></div>
+            <div class="b1" style="width:14px;height:14px;"></div>
+          </div>
+          <div class="pkg-size-label">Medium</div>
+          <div class="pkg-size-cells">1x2</div>
+        </button>
+        <button class="pkg-size-btn" onclick="setPkgSize(2,2,this)" title="2x2 slots">
+          <div class="pkg-size-icon" style="flex-wrap:wrap;width:29px;gap:1px;">
+            <div class="b1" style="width:13px;height:13px;"></div>
+            <div class="b1" style="width:13px;height:13px;"></div>
+            <div class="b1" style="width:13px;height:13px;"></div>
+            <div class="b1" style="width:13px;height:13px;"></div>
+          </div>
+          <div class="pkg-size-label">Large</div>
+          <div class="pkg-size-cells">2x2</div>
+        </button>
+        <button class="pkg-size-btn" onclick="setPkgSize(2,3,this)" title="2x3 slots">
+          <div class="pkg-size-icon" style="flex-wrap:wrap;width:29px;gap:1px;">
+            <div class="b1" style="width:13px;height:13px;"></div><div class="b1" style="width:13px;height:13px;"></div>
+            <div class="b1" style="width:13px;height:13px;"></div><div class="b1" style="width:13px;height:13px;"></div>
+            <div class="b1" style="width:13px;height:13px;"></div><div class="b1" style="width:13px;height:13px;"></div>
+          </div>
+          <div class="pkg-size-label">XL</div>
+          <div class="pkg-size-cells">2x3</div>
+        </button>
+        <button class="pkg-size-btn" onclick="setPkgSize(3,4,this)" title="3x4 slots">
+          <div class="pkg-size-icon" style="flex-wrap:wrap;width:43px;gap:1px;">
+            <div class="b1" style="width:13px;height:11px;"></div><div class="b1" style="width:13px;height:11px;"></div><div class="b1" style="width:13px;height:11px;"></div>
+            <div class="b1" style="width:13px;height:11px;"></div><div class="b1" style="width:13px;height:11px;"></div><div class="b1" style="width:13px;height:11px;"></div>
+            <div class="b1" style="width:13px;height:11px;"></div><div class="b1" style="width:13px;height:11px;"></div><div class="b1" style="width:13px;height:11px;"></div>
+            <div class="b1" style="width:13px;height:11px;"></div><div class="b1" style="width:13px;height:11px;"></div><div class="b1" style="width:13px;height:11px;"></div>
+          </div>
+          <div class="pkg-size-label">Pallet</div>
+          <div class="pkg-size-cells">3x4</div>
+        </button>
+      </div>
+
+      <!-- Cargo stats -->
+      <div class="cargo-stats-row">
+        <div class="cargo-stat">
+          <div class="cargo-stat-val" id="statSlots">0</div>
+          <div class="cargo-stat-lbl">Slots Filled</div>
+        </div>
+        <div class="cargo-stat">
+          <div class="cargo-stat-val" id="statPct">0%</div>
+          <div class="cargo-stat-lbl">Load %</div>
+        </div>
+        <div class="cargo-stat">
+          <div class="cargo-stat-val" id="statPkgs">0</div>
+          <div class="cargo-stat-lbl">Packages</div>
+        </div>
+      </div>
+
+      <div class="cargo-actions">
+        <button class="cargo-clear-btn" onclick="clearCargo()">Clear</button>
+        <button class="cargo-quote-btn" onclick="openModal()">Quote This Load</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonials-header">
+    <div class="section-tag">Reviews</div>
+    <h2 class="section-title">What Our Clients Say</h2>
+  </div>
+  <div class="testimonials-track">
+    <div class="testimonial-card reveal">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="testimonial-quote">TruckCo has been our logistics partner for 5 years. Zero late deliveries, always professional. Highly recommended for any scale of operations.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">MS</div>
+        <div>
+          <div class="author-name">Maria Santos</div>
+          <div class="author-role">Operations Manager, FreshMart</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-1">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="testimonial-quote">Cold chain logistics done right. Our pharmaceutical shipments arrive at perfect temperature every single time. Trust is built here.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">RD</div>
+        <div>
+          <div class="author-name">Roland dela Cruz</div>
+          <div class="author-role">Director, RD Pharma</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-2">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+      <p class="testimonial-quote">Efficient, reliable, and professional. Their real-time tracking gives us complete peace of mind on every shipment we send nationwide.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">JL</div>
+        <div>
+          <div class="author-name">Joyce Lim</div>
+          <div class="author-role">Supply Chain Head, NetServe</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHIPMENT TRACKER -->
+<section id="tracker">
+  <div class="tracker-inner">
+    <div class="section-tag">Live Tracking</div>
+    <h2 class="section-title" style="color:var(--black);">Track Your Shipment</h2>
+    <p class="section-sub">Enter your shipment ID to get real-time status updates and estimated delivery time.</p>
+    <div class="tracker-form">
+      <input type="text" id="trackInput" class="tracker-input" placeholder="e.g. TC-2024-98271" maxlength="20" />
+      <button class="btn-primary" onclick="trackShipment()">
+        Track
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      </button>
+    </div>
+    <p style="font-size:13px;color:var(--gray);margin-top:12px;">Try: TC-2024-98271 &middot; TC-2024-77532 &middot; TC-2024-44819</p>
+    <div class="tracker-result" id="trackerResult">
+      <div class="track-status-bar">
+        <div class="track-header">
+          <div class="track-id">
+            <strong id="trackIdDisplay">TC-2024-98271</strong>
+            Tracking ID
+          </div>
+          <span class="track-badge-status" id="trackStatus">In Transit</span>
+        </div>
+        <div class="track-steps" style="position:relative;">
+          <div class="track-line-fill" id="trackProgress"></div>
+          <div class="track-step done" id="ts1">
+            <div class="track-dot done">&#10003;</div>
+            <div class="track-step-label">Picked Up</div>
+          </div>
+          <div class="track-step done" id="ts2">
+            <div class="track-dot done">&#10003;</div>
+            <div class="track-step-label">In Warehouse</div>
+          </div>
+          <div class="track-step active" id="ts3">
+            <div class="track-dot active">&rarr;</div>
+            <div class="track-step-label">In Transit</div>
+          </div>
+          <div class="track-step" id="ts4">
+            <div class="track-dot">4</div>
+            <div class="track-step-label">Out for Delivery</div>
+          </div>
+          <div class="track-step" id="ts5">
+            <div class="track-dot">5</div>
+            <div class="track-step-label">Delivered</div>
+          </div>
+        </div>
+        <div class="track-meta">
+          <div class="track-meta-item">
+            <div class="track-meta-label">Origin</div>
+            <div class="track-meta-val" id="trackOrigin">Manila</div>
+          </div>
+          <div class="track-meta-item">
+            <div class="track-meta-label">Destination</div>
+            <div class="track-meta-val" id="trackDest">Cebu City</div>
+          </div>
+          <div class="track-meta-item">
+            <div class="track-meta-label">Est. Delivery</div>
+            <div class="track-meta-val" id="trackETA">May 20, 2026</div>
+          </div>
+        </div>
+
+        <!-- LIVE MAP -->
+        <div class="track-map-section" id="trackMapSection">
+          <div class="track-map-label">Live Location Map</div>
+          <div id="trackMap"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT / QUOTE FORM -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-form-wrap">
+      <div class="section-tag" style="justify-content:flex-start;">Get in Touch</div>
+      <h2 class="section-title" style="font-size:32px;margin-bottom:8px;">Request a Quote<br>or Reach Out</h2>
+      <p style="font-size:14px;color:var(--gray);margin-bottom:32px;">Fill out the form and our team will get back to you within the hour.</p>
+      <div id="contactFormWrap">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-input" placeholder="Juan dela Cruz">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Company Name</label>
+            <input type="text" class="form-input" placeholder="Acme Corp.">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="juan@company.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-input" placeholder="+63 917 000 1234">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pickup Location</label>
+            <input type="text" class="form-input" placeholder="City or Address">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Delivery Location</label>
+            <input type="text" class="form-input" placeholder="City or Address">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cargo Type</label>
+            <select class="form-select">
+              <option value="">Select cargo type</option>
+              <option>General Goods</option>
+              <option>Perishable / Cold Chain</option>
+              <option>Heavy Equipment</option>
+              <option>Hazardous Materials</option>
+              <option>Electronics</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Preferred Date</label>
+            <input type="date" class="form-input">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Additional Notes / Message</label>
+            <textarea class="form-textarea" placeholder="Describe your shipment, weight, dimensions, or special requirements..."></textarea>
+          </div>
+        </div>
+        <button class="btn-primary" style="width:100%;justify-content:center;padding:16px;" onclick="submitContactForm()">
+          Send Inquiry
+          <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <h3 style="font-family:var(--font-display);font-size:28px;font-weight:900;text-transform:uppercase;margin-bottom:8px;">Message Sent!</h3>
+        <p style="color:var(--gray);font-size:14px;">Our team will get back to you within the hour. Thank you!</p>
+        <button class="btn-outline" style="margin-top:20px;color:var(--black);border-color:var(--gray-mid);" onclick="resetForm()">Send Another</button>
+      </div>
+    </div>
+    <div class="contact-info">
+      <div class="section-tag">Contact Details</div>
+      <h2 class="contact-info-title">Always Here<br>for You</h2>
+      <p class="contact-info-desc">Our support team is available around the clock to help coordinate your deliveries and answer any questions.</p>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Phone</div>
+            <div class="contact-detail-val">+63 2 8888 0000 &middot; +63 917 000 1234</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Email</div>
+            <div class="contact-detail-val">info@truckco.com.ph</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Head Office</div>
+            <div class="contact-detail-val">123 Logistics Ave., Quezon City, Metro Manila</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Support Hours</div>
+            <div class="contact-detail-val">24/7 — Always Available</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <a href="#hero" class="nav-logo" style="margin-bottom:0;">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+        </div>
+        TruckCo.
+      </a>
+      <p class="footer-brand-desc">Your trusted partner in freight and delivery logistics across the nation.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">Last-Mile Delivery</a></li>
+        <li><a href="#services">Long Haul Freight</a></li>
+        <li><a href="#services">Cold Chain</a></li>
+        <li><a href="#services">Heavy Equipment</a></li>
+        <li><a href="#services">Express Delivery</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#fleet">Our Fleet</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Partners</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Support</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="openModal(); return false;">Get a Quote</a></li>
+        <li><a href="#tracker">Track Shipment</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="#">Terms &amp; Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy; 2026 TruckCo Logistics Inc. All rights reserved.</span>
+    <div style="display:flex;gap:20px;font-size:13px;">
+      <a href="#" style="color:rgba(255,255,255,0.4);text-decoration:none;">Privacy Policy</a>
+      <a href="#" style="color:rgba(255,255,255,0.4);text-decoration:none;">Terms of Service</a>
+      <a href="#" style="color:rgba(255,255,255,0.4);text-decoration:none;">Sitemap</a>
+    </div>
+    <div class="footer-socials">
+      <button class="social-btn" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      </button>
+      <button class="social-btn" aria-label="Twitter">
+        <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+      </button>
+      <button class="social-btn" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path fill="var(--black)" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="var(--black)" stroke-width="2"/></svg>
+      </button>
+      <button class="social-btn" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      </button>
+    </div>
+  </div>
+</footer>
+
+<!-- QUOTE MODAL -->
+<div class="modal-overlay" id="quoteModal" onclick="handleModalClick(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-title">Get a Free<br>Quote</div>
+    <p class="modal-sub">Fill in your details and we'll get back to you within 1 hour.</p>
+    <div id="modalFormWrap">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" placeholder="Your full name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email or Phone</label>
+          <input type="text" class="form-input" placeholder="For us to reach you">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cargo Type</label>
+          <select class="form-select">
+            <option>General Goods</option>
+            <option>Cold Chain</option>
+            <option>Heavy Equipment</option>
+            <option>Express</option>
+          </select>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div class="form-group">
+            <label class="form-label">From</label>
+            <input type="text" class="form-input" placeholder="Origin city">
+          </div>
+          <div class="form-group">
+            <label class="form-label">To</label>
+            <input type="text" class="form-input" placeholder="Destination city">
+          </div>
+        </div>
+        <button class="btn-primary" style="width:100%;justify-content:center;padding:15px;" onclick="submitModal()">
+          Request Quote
+        </button>
+      </div>
+    </div>
+    <div class="form-success" id="modalSuccess">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+      </div>
+      <h3 style="font-family:var(--font-display);font-size:28px;font-weight:900;text-transform:uppercase;margin-bottom:8px;">Quote Requested!</h3>
+      <p style="color:var(--gray);font-size:14px;">We'll reach out within the hour with a personalized quote.</p>
+      <button class="btn-primary" style="margin-top:20px;" onclick="closeModal()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE CHAT WIDGET -->
+<div class="chat-widget">
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-header">
+      <div class="chat-avatar">TC</div>
+      <div>
+        <div class="chat-agent-name">TruckCo Support</div>
+        <div class="chat-status"><span class="status-dot"></span> Online now</div>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg incoming">Hi there! How can we help with your delivery or freight needs?</div>
+      <div class="chat-msg incoming">You can ask about quotes, tracking, or our services.</div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" class="chat-text-input" placeholder="Type a message..." onkeypress="handleChatEnter(event)">
+      <button class="chat-send" onclick="sendChatMessage()">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+  </div>
+  <button class="chat-toggle" id="chatToggle" onclick="toggleChat()" aria-label="Chat with us">
+    <svg id="chatIcon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+  </button>
+</div>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+</button>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- TruckCo Scripts -->
+<script src="truck.js"></script>
+</body>
+</html>
