@@ -33,14 +33,17 @@ function handleModalClick(e) {
 // ── EMAILJS INTEGRATION ──
 // Uses EmailJS (free plan — 200 emails/month). Configured via Public Key below.
 // To activate: create account at emailjs.com, set up a service & template, fill in IDs below.
-const EMAILJS_PUBLIC_KEY  = 'g96yY6NjQEO-Jdteu';    // ← replace
-const EMAILJS_SERVICE_ID  = 'service_aezb4ce';    // ← replace
-const EMAILJS_TEMPLATE_ID = 'template_423cqhr';   // ← replace
+const EMAILJS_PUBLIC_KEY  = 'g96yY6NjQEO-Jdteu';    
+const EMAILJS_SERVICE_ID  = 'service_aezb4ce';   
+const EMAILJS_TEMPLATE_ID = 'template_423cqhr';   
 
 let emailJSReady = false;
 (function loadEmailJS() {
   const s = document.createElement('script');
   s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+  s.onerror = () => {
+    console.error('EmailJS script failed to load.');
+  };
   s.onload = () => {
     if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
       emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -52,8 +55,7 @@ let emailJSReady = false;
 
 async function sendQuoteEmail(params) {
   if (!emailJSReady) {
-    console.warn('EmailJS not configured — email not sent.');
-    return { skipped: true };
+    throw new Error('Email service is not ready. Check EmailJS setup and allowed origin/domain.');
   }
   return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params);
 }
@@ -61,6 +63,7 @@ async function sendQuoteEmail(params) {
 // ── MODAL SUBMIT (with email) ──
 async function submitModal() {
   const btn = document.querySelector('#modalFormWrap .btn-primary');
+  const originalBtnHtml = btn ? btn.innerHTML : '';
   if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
   const name    = document.querySelector('#modalFormWrap input[placeholder="Your full name"]')?.value || '';
@@ -69,22 +72,34 @@ async function submitModal() {
   const from    = document.querySelector('#modalFormWrap input[placeholder="Origin city"]')?.value || '';
   const to      = document.querySelector('#modalFormWrap input[placeholder="Destination city"]')?.value || '';
 
-  await sendQuoteEmail({
-    from_name: name,
-    from_contact: contact,
-    cargo_type: cargo,
-    origin: from,
-    destination: to,
-    message: `Quick quote request from modal. Cargo: ${cargo}. Route: ${from} → ${to}.`,
-  });
+  try {
+    await sendQuoteEmail({
+      from_name: name,
+      from_contact: contact,
+      cargo_type: cargo,
+      origin: from,
+      destination: to,
+      message: `Quick quote request from modal. Cargo: ${cargo}. Route: ${from} → ${to}.`,
+    });
 
-  document.getElementById('modalFormWrap').style.display = 'none';
-  document.getElementById('modalSuccess').classList.add('show');
+    document.getElementById('modalFormWrap').style.display = 'none';
+    document.getElementById('modalSuccess').classList.add('show');
+  } catch (err) {
+    console.error('Modal quote send failed:', err);
+    alert('Quote request could not be sent. Please check your internet connection and EmailJS domain settings, then try again.');
+  } finally {
+    const formWrap = document.getElementById('modalFormWrap');
+    if (btn && formWrap && formWrap.style.display !== 'none') {
+      btn.disabled = false;
+      btn.innerHTML = originalBtnHtml;
+    }
+  }
 }
 
 // ── CONTACT FORM SUBMIT (with email) ──
 async function submitContactForm() {
   const btn = document.querySelector('#contactFormWrap .btn-primary');
+  const originalBtnHtml = btn ? btn.innerHTML : '';
   if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
   const inputs = document.querySelectorAll('#contactFormWrap .form-input, #contactFormWrap .form-select, #contactFormWrap .form-textarea');
@@ -101,20 +116,31 @@ async function submitContactForm() {
   const dateEl    = document.querySelector('#contactFormWrap input[type="date"]');
   const notesEl   = document.querySelector('#contactFormWrap .form-textarea');
 
-  await sendQuoteEmail({
-    from_name:    nameEl?.value    || 'Not provided',
-    company:      companyEl?.value || 'Not provided',
-    from_email:   emailEl?.value   || 'Not provided',
-    phone:        phoneEl?.value   || 'Not provided',
-    origin:       pickupEl?.value  || 'Not provided',
-    destination:  deliverEl?.value || 'Not provided',
-    cargo_type:   cargoEl?.value   || 'Not provided',
-    pickup_date:  dateEl?.value    || 'Not provided',
-    message:      notesEl?.value   || 'No additional notes.',
-  });
+  try {
+    await sendQuoteEmail({
+      from_name:    nameEl?.value    || 'Not provided',
+      company:      companyEl?.value || 'Not provided',
+      from_email:   emailEl?.value   || 'Not provided',
+      phone:        phoneEl?.value   || 'Not provided',
+      origin:       pickupEl?.value  || 'Not provided',
+      destination:  deliverEl?.value || 'Not provided',
+      cargo_type:   cargoEl?.value   || 'Not provided',
+      pickup_date:  dateEl?.value    || 'Not provided',
+      message:      notesEl?.value   || 'No additional notes.',
+    });
 
-  document.getElementById('contactFormWrap').style.display = 'none';
-  document.getElementById('formSuccess').classList.add('show');
+    document.getElementById('contactFormWrap').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  } catch (err) {
+    console.error('Contact form send failed:', err);
+    alert('Inquiry could not be sent. Please check your internet connection and EmailJS domain settings, then try again.');
+  } finally {
+    const formWrap = document.getElementById('contactFormWrap');
+    if (btn && formWrap && formWrap.style.display !== 'none') {
+      btn.disabled = false;
+      btn.innerHTML = originalBtnHtml;
+    }
+  }
 }
 
 function resetForm() {
